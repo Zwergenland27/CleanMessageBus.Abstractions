@@ -9,5 +9,5 @@ public class SequentialAttribute : Attribute
     /// <summary>
     /// Defines the amount of events that can be retrieved from the broker in the local queue
     /// </summary>
-    public required int Amount { get; init; } = 1;
+    public required uint QueueSize { get; init; } = 1;
 }
