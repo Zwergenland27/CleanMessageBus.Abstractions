@@ -1,11 +1,15 @@
+using CleanDomainValidation.Application;
+
 namespace CleanMessageBus.Abstractions;
 
 /// <summary>
 /// Domain event
 /// </summary>
-public abstract class DomainEvent: IDomainEvent
+public abstract class DomainEvent: IRequest
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// Id of the event
+    /// </summary>
     public Guid Id { get; }
 
     /// <summary>

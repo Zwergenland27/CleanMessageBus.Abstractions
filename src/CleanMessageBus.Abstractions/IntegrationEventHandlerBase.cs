@@ -6,7 +6,7 @@ namespace CleanMessageBus.Abstractions;
 /// Defines handler for events of type <typeparamref name="TIntegrationEvent"/>
 /// </summary>
 public abstract class IntegrationEventHandlerBase<TIntegrationEvent> : IRequestHandler<TIntegrationEvent>
-    where TIntegrationEvent : IIntegrationEvent
+    where TIntegrationEvent : IntegrationEvent
 {
     /// <summary>
     /// The max. amount of events that can be polled from the broker to the active instance simultaneously

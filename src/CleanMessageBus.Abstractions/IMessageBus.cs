@@ -8,10 +8,10 @@ public interface IMessageBus
     /// <summary>
     /// Publish integration event <paramref name="integrationEvent"/> to the specified message bus
     /// </summary>
-    Task PublishAsync(IIntegrationEvent integrationEvent);
+    Task PublishAsync(IntegrationEvent integrationEvent);
     
     /// <summary>
     /// Publish domain event <paramref name="domainEvent"/> to the specified message bus
     /// </summary>
-    Task PublishAsync(IDomainEvent domainEvent);
+    Task PublishAsync(DomainEvent domainEvent);
 }

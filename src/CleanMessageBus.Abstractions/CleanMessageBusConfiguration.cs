@@ -159,7 +159,7 @@ public class CleanMessageBusConfiguration(IServiceCollection services)
     {
         var integrationEvents = assembly
             .GetTypes()
-            .Where(p => p.IsAssignableTo(typeof(IIntegrationEvent)));
+            .Where(p => p.IsAssignableTo(typeof(IntegrationEvent)));
 
         foreach (var integrationEvent in integrationEvents)
         {
@@ -171,7 +171,7 @@ public class CleanMessageBusConfiguration(IServiceCollection services)
     {
         var domainEvents = assembly
             .GetTypes()
-            .Where(p => p.IsAssignableTo(typeof(IDomainEvent)));
+            .Where(p => p.IsAssignableTo(typeof(DomainEvent)));
 
         foreach (var domainevent in domainEvents)
         {
