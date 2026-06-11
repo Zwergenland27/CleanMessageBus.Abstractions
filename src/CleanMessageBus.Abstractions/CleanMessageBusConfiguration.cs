@@ -17,8 +17,6 @@ public class CleanMessageBusConfiguration(IServiceCollection services)
     private readonly HashSet<Type> _integrationEventHandlers = [];
     private readonly HashSet<Type> _domainEvents = [];
     private readonly HashSet<Type> _domainEventHandlers = [];
-
-    private readonly HashSet<string> _eventNames = [];
     
     /// <summary>
     /// List of registered integration event types
@@ -44,6 +42,11 @@ public class CleanMessageBusConfiguration(IServiceCollection services)
     /// Indicates whether one message bus is registered
     /// </summary>
     public bool MessageBusRegistered = false;
+    
+    /// <summary>
+    /// Name of the current application
+    /// </summary>
+    public string ApplicationName = Assembly.GetEntryAssembly()!.GetName().Name!;
 
     /// <summary>
     /// Register handlers from assembly <paramref name="assembly"/>
@@ -109,6 +112,16 @@ public class CleanMessageBusConfiguration(IServiceCollection services)
             RegisterDomainEvents(assembly);
         }
         
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the application name used as producer and consumer prefix
+    /// </summary>
+    /// <param name="applicationName">Name of this application</param>
+    public CleanMessageBusConfiguration WithApplicationName(string applicationName)
+    {
+        ApplicationName = applicationName;
         return this;
     }
     
