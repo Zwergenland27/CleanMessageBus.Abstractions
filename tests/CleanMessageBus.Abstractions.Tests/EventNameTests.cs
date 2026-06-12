@@ -10,6 +10,7 @@ public class EventNameTests
         var exception = Assert.Throws<InvalidOperationException>(() => typeof(string).GetEventName("application"));
         Assert.Equal("Event type must be assignable to IntegrationEvent or DomainEvent", exception.Message);
     }
+    
     [Theory]
     [InlineData(typeof(UnnamedDomainEvent), "UnnamedDomainEvent")]
     [InlineData(typeof(UnnamedIntegrationEvent), "UnnamedIntegrationEvent")]
