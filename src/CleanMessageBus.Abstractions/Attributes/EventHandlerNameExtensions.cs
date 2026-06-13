@@ -36,6 +36,19 @@ public static class EventHandlerNameExtensions
         
         return type.BaseType.GetGenericTypeDefinition() == domainEventHandlerType;
     }
+
+    /// <summary>
+    /// Checks if the handler is annotated with the <see cref="ForApplicationAttribute"/>
+    /// </summary>
+    /// <param name="handlerType">Type of the event handler</param>
+    /// <returns>True, if the attribute is used on the class</returns>
+    public static bool IsAnnotatedWithForApplicationAttribute(this Type handlerType)
+    {
+        var eventHandlerNameAttribute = handlerType
+            .GetCustomAttribute<ForApplicationAttribute>(false);
+
+        return eventHandlerNameAttribute is not null;
+    }
     
     /// <summary>
     /// Retrieves the name of the event that is handled by the event handler

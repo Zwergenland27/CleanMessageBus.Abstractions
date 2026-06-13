@@ -140,6 +140,14 @@ public class CleanMessageBusConfiguration(IServiceCollection services)
         foreach (var handler in handlerTypes)
         {
             var eventHandlerName = handler.GetEventHandlerName(ApplicationName).EventHandlerName;
+            
+            var hasForApplicationAttribute = handler.IsAnnotatedWithForApplicationAttribute();
+            if (!hasForApplicationAttribute)
+            {
+                throw new InvalidOperationException(
+                    $"Integration event handler {eventHandlerName} is missing its [ForApplication] attribute.");
+            }
+            
             if (_eventHandlerNames.Contains(eventHandlerName))
             {
                 throw new InvalidOperationException($"Duplicate event handler with name {eventHandlerName}");
@@ -162,6 +170,13 @@ public class CleanMessageBusConfiguration(IServiceCollection services)
         foreach (var handler in handlerTypes)
         {
             var eventHandlerName = handler.GetEventHandlerName(ApplicationName).EventHandlerName;
+            
+            var hasForApplicationAttribute = handler.IsAnnotatedWithForApplicationAttribute();
+            if (hasForApplicationAttribute)
+            {
+                throw new InvalidOperationException($"Cannot set application name for {eventHandlerName} since it is a domain event handler.");
+            }
+            
             if (_eventHandlerNames.Contains(eventHandlerName))
             {
                 throw new InvalidOperationException($"Duplicate event handler with name {eventHandlerName}");
