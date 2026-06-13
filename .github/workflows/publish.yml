@@ -34,7 +34,7 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Pack
-        run: dotnet pack src/${{ vars.ABSTRACTIONS_NAME }} --no-restore --no-build --configuration Release -p:PackageVersion=${VERSION} --output ${{ env.PACKAGE_OUTPUT_DIR }}
+        run: dotnet pack src/${{ vars.PROJECT_NAME }} --no-restore --no-build --configuration Release -p:PackageVersion=${VERSION} --output ${{ env.PACKAGE_OUTPUT_DIR }}
 
       - name: Publish
         run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIR }}/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s ${{ vars.NUGET_SOURCE_URL }}
