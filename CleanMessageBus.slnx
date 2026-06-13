@@ -4,5 +4,7 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/CleanMessageBus.Abstractions.Tests/CleanMessageBus.Abstractions.Tests.csproj" />
+    <Project Path="tests/Duplications/Duplications.csproj" />
+    <Project Path="tests/MixedDuplications/MixedDuplications.csproj" />
   </Folder>
 </Solution>

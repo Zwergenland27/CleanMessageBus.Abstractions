@@ -20,6 +20,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\CleanMessageBus.Abstractions\CleanMessageBus.Abstractions.csproj" />
+      <ProjectReference Include="..\Duplications\Duplications.csproj" />
+      <ProjectReference Include="..\MixedDuplications\MixedDuplications.csproj" />
     </ItemGroup>
 
 </Project>
