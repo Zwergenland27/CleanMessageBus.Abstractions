@@ -11,6 +11,15 @@ public class UnnamedDomainEventHandler: DomainEventHandlerBase<UnnamedDomainEven
     }
 }
 
+[Serialized(MaxQueueSize = 42)]
+public class SerializedDomainEventHandler: DomainEventHandlerBase<UnnamedDomainEvent>
+{
+    public override Task<CanFail> Handle(UnnamedDomainEvent @event, CancellationToken cancellationToken)
+    {
+        return Task.FromResult(CanFail.Success);
+    }
+}
+
 [EventHandlerName("CustomDomainEventHandlerName")]
 public class NamedDomainEventHandler: DomainEventHandlerBase<NamedDomainEvent>
 {
