@@ -1,4 +1,5 @@
 using System.Reflection;
+using CleanMessageBus.Abstractions.Attributes;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CleanMessageBus.Abstractions;
@@ -17,6 +18,9 @@ public class CleanMessageBusConfiguration(IServiceCollection services)
     private readonly HashSet<Type> _integrationEventHandlers = [];
     private readonly HashSet<Type> _domainEvents = [];
     private readonly HashSet<Type> _domainEventHandlers = [];
+
+    private readonly HashSet<string> _eventNames = [];
+    private readonly HashSet<string> _eventHandlerNames = [];
     
     /// <summary>
     /// List of registered integration event types
@@ -135,8 +139,15 @@ public class CleanMessageBusConfiguration(IServiceCollection services)
         
         foreach (var handler in handlerTypes)
         {
+            var eventHandlerName = handler.GetEventHandlerName(ApplicationName).EventHandlerName;
+            if (_eventHandlerNames.Contains(eventHandlerName))
+            {
+                throw new InvalidOperationException($"Duplicate event handler with name {eventHandlerName}");
+            }
+            
             Services.AddTransient(handler);
             _integrationEventHandlers.Add(handler);
+            _eventHandlerNames.Add(eventHandlerName);
         }
     }
     
@@ -150,8 +161,14 @@ public class CleanMessageBusConfiguration(IServiceCollection services)
         
         foreach (var handler in handlerTypes)
         {
+            var eventHandlerName = handler.GetEventHandlerName(ApplicationName).EventHandlerName;
+            if (_eventHandlerNames.Contains(eventHandlerName))
+            {
+                throw new InvalidOperationException($"Duplicate event handler with name {eventHandlerName}");
+            }
             Services.AddTransient(handler);
             _domainEventHandlers.Add(handler);
+            _eventHandlerNames.Add(eventHandlerName);
         }
     }
 
@@ -163,7 +180,13 @@ public class CleanMessageBusConfiguration(IServiceCollection services)
 
         foreach (var integrationEvent in integrationEvents)
         {
+            var eventName = integrationEvent.GetEventName(ApplicationName).EventName;
+            if (_eventNames.Contains(eventName))
+            {
+                throw new InvalidOperationException($"Duplicate event with name {eventName}");
+            }
             _integrationEvents.Add(integrationEvent);
+            _eventNames.Add(eventName);
         }
     }
 
@@ -173,9 +196,15 @@ public class CleanMessageBusConfiguration(IServiceCollection services)
             .GetTypes()
             .Where(p => p.IsAssignableTo(typeof(DomainEvent)));
 
-        foreach (var domainevent in domainEvents)
+        foreach (var domainEvent in domainEvents)
         {
-            _domainEvents.Add(domainevent);
+            var eventName = domainEvent.GetEventName(ApplicationName).EventName;
+            if (_eventNames.Contains(eventName))
+            {
+                throw new InvalidOperationException($"Duplicate event with name {eventName}");
+            }
+            _domainEvents.Add(domainEvent);
+            _eventNames.Add(eventName);
         }
     }
 }
