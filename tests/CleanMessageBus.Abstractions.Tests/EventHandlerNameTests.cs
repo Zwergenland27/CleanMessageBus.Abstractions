@@ -1,4 +1,6 @@
 using CleanMessageBus.Abstractions.Attributes;
+using InvalidDomainEventHandlers;
+using InvalidIntegrationEventHandlers;
 
 namespace CleanMessageBus.Abstractions.Tests;
 
@@ -14,8 +16,8 @@ public class EventHandlerNameTests
     [Fact]
     public void GetHandledEventName_ShouldThrow_WhenDomainEventHasForApplicationAttributeSet()
     {
-        var exception = Assert.Throws<InvalidOperationException>(() => typeof(ForApplicationAttributedDomainEventHandler).GetHandledEventName("application"));
-        Assert.Equal($"Cannot set application name for ForApplicationAttributedDomainEventHandler since it is a domain event handler.", exception.Message);
+        var exception = Assert.Throws<InvalidOperationException>(() => typeof(InvalidDomainEventHandler).GetHandledEventName("application"));
+        Assert.Equal($"Cannot set application name for InvalidDomainEventHandler since it is a domain event handler.", exception.Message);
     }
 
     [Theory]
@@ -31,8 +33,8 @@ public class EventHandlerNameTests
     [Fact]
     public void GetHandledEventName_ShouldThrow_WhenIntegrationEventHandlerMissesForApplicationAttribute()
     {
-        var exception = Assert.Throws<InvalidOperationException>(() => typeof(MissingForApplicationAttributeIntegrationEventHandler).GetHandledEventName("application"));
-        Assert.Equal("Integration event handler MissingForApplicationAttributeIntegrationEventHandler is missing its [ForApplication] attribute.", exception.Message);
+        var exception = Assert.Throws<InvalidOperationException>(() => typeof(InvalidIntegrationEventHandler).GetHandledEventName("application"));
+        Assert.Equal("Integration event handler InvalidIntegrationEventHandler is missing its [ForApplication] attribute.", exception.Message);
     }
 
     [Theory]

@@ -11,27 +11,10 @@ public class UnnamedDomainEventHandler: DomainEventHandlerBase<UnnamedDomainEven
     }
 }
 
-[ForApplication("CustomApplication")]
-public class ForApplicationAttributedDomainEventHandler : DomainEventHandlerBase<UnnamedDomainEvent>
-{
-    public override Task<CanFail> Handle(UnnamedDomainEvent @event, CancellationToken cancellationToken)
-    {
-        return Task.FromResult(CanFail.Success);
-    }
-}
-
 [EventHandlerName("CustomDomainEventHandlerName")]
 public class NamedDomainEventHandler: DomainEventHandlerBase<NamedDomainEvent>
 {
     public override Task<CanFail> Handle(NamedDomainEvent @event, CancellationToken cancellationToken)
-    {
-        return Task.FromResult(CanFail.Success);
-    }
-}
-
-public class MissingForApplicationAttributeIntegrationEventHandler : IntegrationEventHandlerBase<UnnamedIntegrationEvent>
-{
-    public override Task<CanFail> Handle(UnnamedIntegrationEvent @event, CancellationToken cancellationToken)
     {
         return Task.FromResult(CanFail.Success);
     }
