@@ -7,7 +7,7 @@ public class UnnamedDomainEventHandler: DomainEventHandlerBase<UnnamedDomainEven
 {
     public override Task<CanFail> Handle(UnnamedDomainEvent @event, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(CanFail.Success);
     }
 }
 
@@ -16,7 +16,7 @@ public class ForApplicationAttributedDomainEventHandler : DomainEventHandlerBase
 {
     public override Task<CanFail> Handle(UnnamedDomainEvent @event, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(CanFail.Success);
     }
 }
 
@@ -25,7 +25,7 @@ public class NamedDomainEventHandler: DomainEventHandlerBase<NamedDomainEvent>
 {
     public override Task<CanFail> Handle(NamedDomainEvent @event, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(CanFail.Success);
     }
 }
 
@@ -33,7 +33,7 @@ public class MissingForApplicationAttributeIntegrationEventHandler : Integration
 {
     public override Task<CanFail> Handle(UnnamedIntegrationEvent @event, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(CanFail.Success);
     }
 }
 
@@ -42,7 +42,7 @@ public class UnnamedIntegrationEventHandler: IntegrationEventHandlerBase<Unnamed
 {
     public override Task<CanFail> Handle(UnnamedIntegrationEvent @event, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(CanFail.Success);
     }
 }
 
@@ -52,6 +52,6 @@ public class NamedIntegrationEventHandler: IntegrationEventHandlerBase<NamedInte
 {
     public override Task<CanFail> Handle(NamedIntegrationEvent @event, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(CanFail.Success);
     }
 }

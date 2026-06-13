@@ -9,6 +9,6 @@ public class InvalidIntegrationEventHandler: IntegrationEventHandlerBase<Invalid
 {
     public override Task<CanFail> Handle(InvalidIntegrationEvent invalidIntegrationEvent, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(CanFail.Success);
     }
 }

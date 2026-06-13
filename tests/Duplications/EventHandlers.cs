@@ -8,7 +8,7 @@ public class DomainEventHandlerOne: DomainEventHandlerBase<DomainEventOne>
 {
     public override Task<CanFail> Handle(DomainEventOne domainEvent, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(CanFail.Success);
     }
 }
 
@@ -17,6 +17,6 @@ public class DomainEventHandlerTwo: DomainEventHandlerBase<DomainEventTwo>
 {
     public override Task<CanFail> Handle(DomainEventTwo integrationEvent, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(CanFail.Success);
     }
 }

@@ -11,6 +11,6 @@ public class InvalidDomainEventHandler: DomainEventHandlerBase<InvalidDomainEven
 {
     public override Task<CanFail> Handle(InvalidDomainEvent invalidDomainEvent, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Task.FromResult(CanFail.Success);
     }
 }
