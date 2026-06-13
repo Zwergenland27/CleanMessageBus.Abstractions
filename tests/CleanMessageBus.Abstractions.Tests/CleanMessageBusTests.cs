@@ -1,7 +1,10 @@
 using System.Reflection;
 using Duplications;
+using InvalidDomainEventHandlers;
+using InvalidIntegrationEventHandlers;
 using Microsoft.Extensions.DependencyInjection;
 using MixedDuplications;
+using Xunit.Sdk;
 
 namespace CleanMessageBus.Abstractions.Tests;
 
@@ -197,5 +200,27 @@ public class CleanMessageBusTests
         var exception = Assert.Throws<InvalidOperationException>(() => sut.RegisterHandlersFromAssembly(assembly));
         
         Assert.Equal($"Duplicate event handler with name {duplicateHandlerName}", exception.Message);
+    }
+
+    [Fact]
+    public void RegisterHandlersFromAssembly_ShouldThrowException_WhenDomainEventHandlerHasForApplicationAttribute()
+    {
+        var sut = CreateSut();
+        var assembly = Assembly.GetAssembly(typeof(InvalidDomainEventHandler))!;
+        
+        var exception = Assert.Throws<InvalidOperationException>(() => sut.RegisterHandlersFromAssembly(assembly));
+
+        Assert.Equal("Cannot set application name for InvalidDomainEventHandler since it is a domain event handler.", exception.Message);
+    }
+    
+    [Fact]
+    public void RegisterHandlersFromAssembly_ShouldThrowException_WhenIntegrationEventHandlerHasNoForApplicationAttribute()
+    {
+        var sut = CreateSut();
+        var assembly = Assembly.GetAssembly(typeof(InvalidIntegrationEventHandler))!;
+        
+        var exception = Assert.Throws<InvalidOperationException>(() => sut.RegisterHandlersFromAssembly(assembly));
+
+        Assert.Equal($"Integration event handler InvalidIntegrationEventHandler is missing its [ForApplication] attribute.", exception.Message);
     }
 }
