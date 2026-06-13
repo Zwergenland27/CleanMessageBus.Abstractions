@@ -14,7 +14,7 @@ public class EventHandlerNameTests
     }
     
     [Fact]
-    public void GetHandledEventName_ShouldThrow_WhenDomainEventHasForApplicationAttributeSet()
+    public void GetHandledEventName_ShouldThrow_WhenDomainEventHasSourceApplicationAttributeSet()
     {
         var exception = Assert.Throws<InvalidOperationException>(() => typeof(InvalidDomainEventHandler).GetHandledEventName("application"));
         Assert.Equal($"Cannot set application name for InvalidDomainEventHandler since it is a domain event handler.", exception.Message);
@@ -31,10 +31,10 @@ public class EventHandlerNameTests
     }
 
     [Fact]
-    public void GetHandledEventName_ShouldThrow_WhenIntegrationEventHandlerMissesForApplicationAttribute()
+    public void GetHandledEventName_ShouldThrow_WhenIntegrationEventHandlerMissesSourceApplicationAttribute()
     {
         var exception = Assert.Throws<InvalidOperationException>(() => typeof(InvalidIntegrationEventHandler).GetHandledEventName("application"));
-        Assert.Equal("Integration event handler InvalidIntegrationEventHandler is missing its [ForApplication] attribute.", exception.Message);
+        Assert.Equal("Integration event handler InvalidIntegrationEventHandler is missing its [SourceApplication] attribute.", exception.Message);
     }
 
     [Theory]

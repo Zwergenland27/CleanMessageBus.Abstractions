@@ -141,11 +141,11 @@ public class CleanMessageBusConfiguration(IServiceCollection services)
         {
             var eventHandlerName = handler.GetEventHandlerName(ApplicationName).EventHandlerName;
             
-            var hasForApplicationAttribute = handler.IsAnnotatedWithForApplicationAttribute();
-            if (!hasForApplicationAttribute)
+            var hasSourceApplicationAttribute = handler.IsAnnotatedWithSourceApplicationAttribute();
+            if (!hasSourceApplicationAttribute)
             {
                 throw new InvalidOperationException(
-                    $"Integration event handler {eventHandlerName} is missing its [ForApplication] attribute.");
+                    $"Integration event handler {eventHandlerName} is missing its [SourceApplication] attribute.");
             }
             
             if (_eventHandlerNames.Contains(eventHandlerName))
@@ -171,8 +171,8 @@ public class CleanMessageBusConfiguration(IServiceCollection services)
         {
             var eventHandlerName = handler.GetEventHandlerName(ApplicationName).EventHandlerName;
             
-            var hasForApplicationAttribute = handler.IsAnnotatedWithForApplicationAttribute();
-            if (hasForApplicationAttribute)
+            var hasSourceApplicationAttribute = handler.IsAnnotatedWithSourceApplicationAttribute();
+            if (hasSourceApplicationAttribute)
             {
                 throw new InvalidOperationException($"Cannot set application name for {eventHandlerName} since it is a domain event handler.");
             }

@@ -4,7 +4,7 @@ namespace CleanMessageBus.Abstractions.Attributes;
 /// Defines the application name for an integration event handler
 /// </summary>
 [AttributeUsage(AttributeTargets.Class)]
-public class ForApplicationAttribute : Attribute
+public class SourceApplicationAttribute : Attribute
 {
     /// <summary>
     /// Name of the application
@@ -15,7 +15,7 @@ public class ForApplicationAttribute : Attribute
     /// Defines the application name for an integration event handler
     /// </summary>
     /// <param name="applicationName">Name of the application</param>
-    public ForApplicationAttribute(string applicationName)
+    public SourceApplicationAttribute(string applicationName)
     {
         ApplicationName = applicationName;
     }

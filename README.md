@@ -20,7 +20,7 @@ await messageBus.PublishAsync(integrationevent);
 
 ## Handling Events
 * Handler must inherit from ``IntegrationEventHandlerBase<TIntegrationEvent>`` class for integration events or from ``DomainEventHandlerBase<TDomainEvent>`` for domain events
-* Integration event handlers must specify the name of the application, that published the event using the `[FromApplication(<Name>)]` attribute. This is **not allowed** for domain event handlers, as the application of the event and the event handler must match.
+* Integration event handlers must specify the name of the application, that published the event using the `[SourceApplication(<Name>)]` attribute. This is **not allowed** for domain event handlers, as the application of the event and the event handler must match.
 * Generic type specifies domain event type to receive
 * Implementation logic must be implemented in the ``Handle`` method
 * Registration happens automatically via dependency injection
@@ -29,7 +29,7 @@ await messageBus.PublishAsync(integrationevent);
 Example:
 
 ```csharp
-[FromApplication("MyApp.Authorization")]
+[SourceApplication("MyApp.Authorization")]
 public class UserRegisteredEventHandler : IntegrationEventHandlerBase<UserRegisteredEvent>
 {
     public override async Task<CanFail> Handle(UserRegisteredEvent @event, CancellationToken cancellationToken)

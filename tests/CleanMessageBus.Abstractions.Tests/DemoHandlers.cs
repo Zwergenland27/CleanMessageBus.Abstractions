@@ -29,7 +29,7 @@ public class NamedDomainEventHandler: DomainEventHandlerBase<NamedDomainEvent>
     }
 }
 
-[ForApplication("CustomApplication")]
+[SourceApplication("CustomApplication")]
 public class UnnamedIntegrationEventHandler: IntegrationEventHandlerBase<UnnamedIntegrationEvent>
 {
     public override Task<CanFail> Handle(UnnamedIntegrationEvent @event, CancellationToken cancellationToken)
@@ -39,7 +39,7 @@ public class UnnamedIntegrationEventHandler: IntegrationEventHandlerBase<Unnamed
 }
 
 [EventHandlerName("CustomIntegrationEventHandlerName")]
-[ForApplication("CustomApplication")]
+[SourceApplication("CustomApplication")]
 public class NamedIntegrationEventHandler: IntegrationEventHandlerBase<NamedIntegrationEvent>
 {
     public override Task<CanFail> Handle(NamedIntegrationEvent @event, CancellationToken cancellationToken)

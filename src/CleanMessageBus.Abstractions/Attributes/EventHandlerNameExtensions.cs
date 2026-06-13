@@ -38,14 +38,14 @@ public static class EventHandlerNameExtensions
     }
 
     /// <summary>
-    /// Checks if the handler is annotated with the <see cref="ForApplicationAttribute"/>
+    /// Checks if the handler is annotated with the <see cref="SourceApplicationAttribute"/>
     /// </summary>
     /// <param name="handlerType">Type of the event handler</param>
     /// <returns>True, if the attribute is used on the class</returns>
-    public static bool IsAnnotatedWithForApplicationAttribute(this Type handlerType)
+    public static bool IsAnnotatedWithSourceApplicationAttribute(this Type handlerType)
     {
         var eventHandlerNameAttribute = handlerType
-            .GetCustomAttribute<ForApplicationAttribute>(false);
+            .GetCustomAttribute<SourceApplicationAttribute>(false);
 
         return eventHandlerNameAttribute is not null;
     }
@@ -55,7 +55,7 @@ public static class EventHandlerNameExtensions
     /// </summary>
     /// <param name="handlerType">Type of the event handler</param>
     /// /// <param name="applicationName">Name of the current application</param>
-    /// <exception cref="InvalidOperationException"><see cref="ForApplicationAttribute"/> has not been set for the handler</exception>
+    /// <exception cref="InvalidOperationException"><see cref="SourceApplicationAttribute"/> has not been set for the handler</exception>
     public static UniqueEventName GetHandledEventName(this Type handlerType, string applicationName)
     {
         handlerType.EnsureValidHandlerType();
@@ -73,7 +73,7 @@ public static class EventHandlerNameExtensions
     /// </summary>
     /// <param name="handlerType">Type of the event handler</param>
     /// /// <param name="applicationName">Name of the current application</param>
-    /// <exception cref="InvalidOperationException"><see cref="ForApplicationAttribute"/> has not been set for the handler</exception>
+    /// <exception cref="InvalidOperationException"><see cref="SourceApplicationAttribute"/> has not been set for the handler</exception>
     public static UniqueEventHandlerName GetEventHandlerName(this Type handlerType, string applicationName)
     {
         handlerType.EnsureValidHandlerType();
@@ -92,9 +92,9 @@ public static class EventHandlerNameExtensions
 
     private static UniqueEventName GetHandledDomainEventName(this Type handlerType, string applicationName)
     {
-        var forApplicationAttribute = handlerType
-            .GetCustomAttribute<ForApplicationAttribute>(false);
-        if (forApplicationAttribute is not null)
+        var sourceApplicationAttribute = handlerType
+            .GetCustomAttribute<SourceApplicationAttribute>(false);
+        if (sourceApplicationAttribute is not null)
         {
             throw new InvalidOperationException($"Cannot set application name for {handlerType.Name} since it is a domain event handler.");
         }
@@ -107,18 +107,18 @@ public static class EventHandlerNameExtensions
 
     private static UniqueEventName GetHandledIntegrationEventName(this Type handlerType)
     {
-        var forApplicationAttribute = handlerType
-            .GetCustomAttribute<ForApplicationAttribute>(false);
+        var sourceApplicationAttribute = handlerType
+            .GetCustomAttribute<SourceApplicationAttribute>(false);
         
-        if (forApplicationAttribute is null)
+        if (sourceApplicationAttribute is null)
         {
             throw new InvalidOperationException(
-                $"Integration event handler {handlerType.Name} is missing its [ForApplication] attribute.");
+                $"Integration event handler {handlerType.Name} is missing its [SourceApplication] attribute.");
         }
         
         //Integration event that is handled by the handler
         var integrationEventType = handlerType.BaseType!.GetGenericArguments()[0];
         
-        return integrationEventType.GetEventName(forApplicationAttribute.ApplicationName);
+        return integrationEventType.GetEventName(sourceApplicationAttribute.ApplicationName);
     }
 }

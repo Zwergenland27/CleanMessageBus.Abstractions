@@ -203,7 +203,7 @@ public class CleanMessageBusTests
     }
 
     [Fact]
-    public void RegisterHandlersFromAssembly_ShouldThrowException_WhenDomainEventHandlerHasForApplicationAttribute()
+    public void RegisterHandlersFromAssembly_ShouldThrowException_WhenDomainEventHandlerHasSourceApplicationAttribute()
     {
         var sut = CreateSut();
         var assembly = Assembly.GetAssembly(typeof(InvalidDomainEventHandler))!;
@@ -214,13 +214,13 @@ public class CleanMessageBusTests
     }
     
     [Fact]
-    public void RegisterHandlersFromAssembly_ShouldThrowException_WhenIntegrationEventHandlerHasNoForApplicationAttribute()
+    public void RegisterHandlersFromAssembly_ShouldThrowException_WhenIntegrationEventHandlerHasNoSourceApplicationAttribute()
     {
         var sut = CreateSut();
         var assembly = Assembly.GetAssembly(typeof(InvalidIntegrationEventHandler))!;
         
         var exception = Assert.Throws<InvalidOperationException>(() => sut.RegisterHandlersFromAssembly(assembly));
 
-        Assert.Equal($"Integration event handler InvalidIntegrationEventHandler is missing its [ForApplication] attribute.", exception.Message);
+        Assert.Equal($"Integration event handler InvalidIntegrationEventHandler is missing its [SourceApplication] attribute.", exception.Message);
     }
 }

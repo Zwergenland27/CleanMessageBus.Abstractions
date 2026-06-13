@@ -13,7 +13,7 @@ public class EventHandlerOne: DomainEventHandlerBase<EventOne>
 }
 
 [EventHandlerName("EventHandlerOne")]
-[ForApplication("Irrelevant")]
+[SourceApplication("Irrelevant")]
 public class EventHandlerTwo: IntegrationEventHandlerBase<EventTwo>
 {
     public override Task<CanFail> Handle(EventTwo integrationEvent, CancellationToken cancellationToken)
