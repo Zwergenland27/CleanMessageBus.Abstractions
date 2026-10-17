@@ -20,10 +20,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\CleanMessageBus.Abstractions\CleanMessageBus.Abstractions.csproj" />
-      <ProjectReference Include="..\Duplications\Duplications.csproj" />
-      <ProjectReference Include="..\InvalidDomainEventHandlers\InvalidDomainEventHandlers.csproj" />
-      <ProjectReference Include="..\InvalidIntegrationEventHandlers\InvalidIntegrationEventHandlers.csproj" />
-      <ProjectReference Include="..\MixedDuplications\MixedDuplications.csproj" />
     </ItemGroup>
 
 </Project>

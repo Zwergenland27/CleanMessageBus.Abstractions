@@ -1,35 +1,46 @@
-﻿using CleanMessageBus.Abstractions.Attributes;
-
 namespace CleanMessageBus.Abstractions.Tests;
 
-public class EventNameTests
+public sealed class EventNamesTests
 {
     [Fact]
-    public void GetEventName_ShouldThrow_WhenNoDomainOrIntegrationEvent()
+    public void For_ShouldReturnAttributeName_WhenEventNameAttributeIsPresent()
     {
-        var exception = Assert.Throws<InvalidOperationException>(() => typeof(string).GetEventName("application"));
-        Assert.Equal("Event type must be assignable to IntegrationEvent or DomainEvent", exception.Message);
+        Assert.Equal("order-shipped", EventNames.For<NamedEvent>());
     }
-    
+
+    [Fact]
+    public void For_ShouldReturnTypeName_WhenEventNameAttributeIsMissing()
+    {
+        Assert.Equal(nameof(UnnamedEvent), EventNames.For(typeof(UnnamedEvent)));
+    }
+
+    [Fact]
+    public void For_ShouldIgnoreAttributeOfBaseType_WhenDerivedTypeHasNone()
+    {
+        Assert.Equal(nameof(DerivedEvent), EventNames.For<DerivedEvent>());
+    }
+
+    [Fact]
+    public void For_ShouldThrow_WhenTypeIsNull()
+    {
+        Assert.Throws<ArgumentNullException>(() => EventNames.For(null!));
+    }
+
     [Theory]
-    [InlineData(typeof(UnnamedDomainEvent), "UnnamedDomainEvent")]
-    [InlineData(typeof(UnnamedIntegrationEvent), "UnnamedIntegrationEvent")]
-    public void GetEventName_ShouldReturnApplicationAndTypeName_OnDefault(Type eventType, string expectedName)
+    [InlineData("")]
+    [InlineData("   ")]
+    public void EventNameAttribute_ShouldThrow_WhenNameIsEmpty(string name)
     {
-        var name = eventType.GetEventName("application");
-        
-        Assert.Equal("application", name.ApplicationName);
-        Assert.Equal(expectedName, name.EventName);
+        Assert.Throws<ArgumentException>(() => new EventNameAttribute(name));
     }
-    
-    [Theory]
-    [InlineData(typeof(NamedDomainEvent), "CustomDomainEventName")]
-    [InlineData(typeof(NamedIntegrationEvent), "CustomIntegrationEventName")]
-    public void GetEventName_ShouldReturnApplicationAndCustomName_WhenAttributeSet(Type eventType, string expectedName)
-    {
-        var name = eventType.GetEventName("application");
-        
-        Assert.Equal("application", name.ApplicationName);
-        Assert.Equal(expectedName, name.EventName);
-    }
+
+    [EventName("order-shipped")]
+    private sealed record NamedEvent : IDomainEvent;
+
+    private sealed record UnnamedEvent : IIntegrationEvent;
+
+    [EventName("base-event")]
+    private record BaseEvent : IDomainEvent;
+
+    private sealed record DerivedEvent : BaseEvent;
 }
