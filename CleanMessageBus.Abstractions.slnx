@@ -2,4 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/CleanMessageBus.Abstractions/CleanMessageBus.Abstractions.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CleanMessageBus.Abstractions.Tests/CleanMessageBus.Abstractions.Tests.csproj" />
+  </Folder>
 </Solution>
